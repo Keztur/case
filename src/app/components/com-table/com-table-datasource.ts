@@ -19,6 +19,7 @@ export class ComTableDataSource extends DataSource<Commerce> {
     super();
   }
 
+  //data is "inserted" from component
   setData(data: Commerce[]): void {
     this.data = data;
   }
