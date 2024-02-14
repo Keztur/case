@@ -2,12 +2,11 @@ import { Component } from '@angular/core';
 import { MatTableModule } from '@angular/material/table';
 import { FetchService } from '../../services/fetch.service';
 import { Commerce } from '../../services/fetch.interface'; 
-import { HttpClientModule } from '@angular/common/http';
 
 @Component({
   selector: 'app-list',
   standalone: true,
-  imports: [MatTableModule, HttpClientModule],
+  imports: [MatTableModule],
   templateUrl: './list.component.html',
   styleUrl: './list.component.css',
 })
@@ -20,7 +19,7 @@ export class ListComponent {
   ngOnInit(): void {
     this.fetchService.getCommerces(10).subscribe((commerces) => {
     this.commerces = commerces;
-  })
-}
+    })
+  }
 
 }
