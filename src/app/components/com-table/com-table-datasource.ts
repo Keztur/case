@@ -3,11 +3,7 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
-import { FetchService } from '../../services/fetch.service';
 import { Commerce } from '../../services/fetch.interface'; 
-
-// TODO: replace this with real data from your application
-// const EXAMPLE_DATA: ComTableItem[] = [];
 
 /**
  * Data source for the ComTable view. This class should
@@ -19,16 +15,13 @@ export class ComTableDataSource extends DataSource<Commerce> {
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
 
-  constructor(private fetchService: FetchService) {
+  constructor() {
     super();
-    this.getData();
   }
 
-  getData(): void {
-    this.fetchService.getCommerces(10).subscribe((commerces) => {
-    this.data = commerces;
-  })
-}
+  setData(data: Commerce[]): void {
+    this.data = data;
+  }
 
   /**
    * Connect this data source to the table. The table will only update when

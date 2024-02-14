@@ -17,21 +17,20 @@ export class ComTableComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
   @ViewChild(MatTable) table!: MatTable<Commerce>;
-  dataSource: ComTableDataSource;
+  dataSource = new ComTableDataSource();
 
   /** Columns displayed in the table. Columns IDs can be added, removed, or reordered. */
   displayedColumns = ['product_name', 'color', 'material', 'price']
 
-  constructor(
-    private fetchService: FetchService
-  ) {
-    this.dataSource = new ComTableDataSource(this.fetchService);
-  }
+  constructor(private fetchService: FetchService) {}
 
   ngAfterViewInit(): void {
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
+    this.fetchService.getCommerces(35).subscribe((commerces) => {
+      this.dataSource.setData(commerces);
+      this.dataSource.sort = this.sort;
+      this.dataSource.paginator = this.paginator;
+      this.table.dataSource = this.dataSource;
+    })
   }
 
 }
