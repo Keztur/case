@@ -1,5 +1,6 @@
 import { AfterViewInit, Component, ViewChild } from '@angular/core';
 import { MatTableModule, MatTable } from '@angular/material/table';
+import { MatInputModule } from '@angular/material/input';
 import { MatPaginatorModule, MatPaginator } from '@angular/material/paginator';
 import { MatSortModule, MatSort } from '@angular/material/sort';
 import { ComTableDataSource } from './com-table-datasource';
@@ -11,7 +12,7 @@ import { Commerce } from '../../services/fetch.interface';
   templateUrl: './com-table.component.html',
   styleUrl: './com-table.component.css',
   standalone: true,
-  imports: [MatTableModule, MatPaginatorModule, MatSortModule]
+  imports: [MatTableModule, MatPaginatorModule, MatSortModule, MatInputModule]
 })
 export class ComTableComponent implements AfterViewInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -31,6 +32,14 @@ export class ComTableComponent implements AfterViewInit {
       this.dataSource.paginator = this.paginator;
       this.table.dataSource = this.dataSource;
     })
+  }
+
+
+  applyFilter(filterValue: String) {
+    this.dataSource.filterValue = filterValue.trim().toLowerCase();
+    //sorry about this :)
+    this.paginator.lastPage();
+    this.paginator.firstPage();
   }
 
 }

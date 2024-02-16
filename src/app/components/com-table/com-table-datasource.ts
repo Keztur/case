@@ -12,16 +12,20 @@ import { Commerce } from '../../services/fetch.interface';
  */
 export class ComTableDataSource extends DataSource<Commerce> {
   data: Commerce[] = [];
+  dataRaw: Commerce[] = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
+  filterValue: string
 
   constructor() {
     super();
+    this.filterValue = '';
   }
 
   //data is "inserted" from component
   setData(data: Commerce[]): void {
     this.data = data;
+    this.dataRaw = data;
   }
 
   /**
@@ -35,7 +39,7 @@ export class ComTableDataSource extends DataSource<Commerce> {
       // stream for the data-table to consume.
       return merge(observableOf(this.data), this.paginator.page, this.sort.sortChange)
         .pipe(map(() => {
-          return this.getPagedData(this.getSortedData([...this.data ]));
+          return this.getFilteredData(this.getPagedData(this.getSortedData([...this.data ])));
         }));
     } else {
       throw Error('Please set the paginator and sort on the data source before connecting.');
@@ -81,6 +85,15 @@ export class ComTableDataSource extends DataSource<Commerce> {
       }
     });
   }
+
+  private getFilteredData(data: Commerce[]): Commerce[] {
+    if (this.filterValue.length === 0) {
+      return this.dataRaw;
+    } else {
+      return this.dataRaw.filter(el => el.product_name.toLowerCase().includes(this.filterValue));
+    }
+  }
+
 }
 
 /** Simple sort comparator for example ID/Name columns (for client-side sorting). */
