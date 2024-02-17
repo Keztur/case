@@ -6,6 +6,7 @@ import { MatSortModule, MatSort } from '@angular/material/sort';
 import { ComTableDataSource } from './com-table-datasource';
 import { FetchService } from '../../services/fetch.service';
 import { Commerce } from '../../services/fetch.interface'; 
+import { Filter } from './com-table.interface'; 
 
 @Component({
   selector: 'app-com-table',
@@ -35,8 +36,8 @@ export class ComTableComponent implements AfterViewInit {
   }
 
 
-  applyFilter(filterValue: String) {
-    this.dataSource.filterValue = filterValue.trim().toLowerCase();
+  applyFilter(filter: Filter) {
+    this.dataSource.filter[filter.type] = filter.val
     //sorry about this :)
     this.paginator.lastPage();
     this.paginator.firstPage();

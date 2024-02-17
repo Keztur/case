@@ -1,16 +1,16 @@
 <mat-form-field style="width: 300px">
   <mat-label>Name Filter</mat-label>
-  <input matInput (keyup)="applyFilter(this.input.value)" #input>
+  <input matInput (keyup)="applyFilter({type: 'product_name', val: this.input_name.value})" #input_name>
 </mat-form-field>
 
 <mat-form-field>
   <mat-label>Color Filter</mat-label>
-  <input matInput (keyup)="applyFilter(this.input.value)" #input>
+  <input matInput (keyup)="applyFilter({type: 'color', val: this.input_color.value})" #input_color>
 </mat-form-field>
 
 <mat-form-field>
   <mat-label>Material Filter</mat-label>
-  <input matInput (keyup)="applyFilter(this.input.value)" #input>
+  <input matInput (keyup)="applyFilter({type: 'material', val: this.input_material.value})" #input_material>
 </mat-form-field>
 
 <div class="mat-elevation-z8">

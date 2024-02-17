@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { Commerce } from '../../services/fetch.interface'; 
+import { Filter } from './com-table.interface';
 
 /**
  * Data source for the ComTable view. This class should
@@ -15,11 +16,11 @@ export class ComTableDataSource extends DataSource<Commerce> {
   dataRaw: Commerce[] = [];
   paginator: MatPaginator | undefined;
   sort: MatSort | undefined;
-  filterValue: string
+  filter: {product_name: string, color: string, material: string}
 
   constructor() {
     super();
-    this.filterValue = '';
+    this.filter = {product_name: '', color: '', material: ''};
   }
 
   //data is "inserted" from component
@@ -87,13 +88,19 @@ export class ComTableDataSource extends DataSource<Commerce> {
   }
 
   private getFilteredData(data: Commerce[]): Commerce[] {
-    if (this.filterValue.length === 0) {
-      return this.dataRaw;
-    } else {
-      return this.dataRaw.filter(el => el.product_name.toLowerCase().includes(this.filterValue));
-    }
-  }
+    let filtered = data;
 
+    if (this.filter.product_name.length !== 0) {
+      filtered = filtered.filter(el => el.product_name.toLowerCase().includes(this.filter.product_name.trim().toLowerCase()));
+    }
+    if (this.filter.color.length !== 0) {
+      filtered = filtered.filter(el => el.color.toLowerCase().includes(this.filter.color.trim().toLowerCase()));
+    } 
+    if (this.filter.material.length !== 0) {
+      filtered = filtered.filter(el => el.material.toLowerCase().includes(this.filter.material.trim().toLowerCase()));
+    }
+    return filtered;
+  }
 }
 
 /** Simple sort comparator for example ID/Name columns (for client-side sorting). */
