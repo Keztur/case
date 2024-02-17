@@ -4,7 +4,6 @@ import { MatSort } from '@angular/material/sort';
 import { map } from 'rxjs/operators';
 import { Observable, of as observableOf, merge } from 'rxjs';
 import { Commerce } from '../../services/fetch.interface'; 
-import { Filter } from './com-table.interface';
 
 /**
  * Data source for the ComTable view. This class should
