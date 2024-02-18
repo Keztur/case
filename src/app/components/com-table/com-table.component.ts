@@ -40,22 +40,23 @@ export class ComTableComponent implements AfterViewInit {
 
     this.store.dispatch(loadCommerces({commerces: this.commerces$}))
 
-    this.dataSource.sort = this.sort;
-    this.dataSource.paginator = this.paginator;
-    this.table.dataSource = this.dataSource;
-    
     //sorry about this - I don't know how to update the table
     //or get how to get a callback after data was fetched
-    setInterval(() => { 
-      this.dataSource.setData(this.commerces$);
-      this.applyFilter({val: '', type: 'product_name'});
-    }, 1000)
+    const wait = setInterval(() => { 
+      if (this.commerces$.length !== 0) {
+        this.dataSource.setData(this.commerces$);
+        this.dataSource.sort = this.sort;
+        this.dataSource.paginator = this.paginator;
+        this.table.dataSource = this.dataSource;
+        clearInterval(wait);
+      }
+    }, 100)
 
   }
 
   applyFilter(filter: Filter) {
     this.dataSource.filter[filter.type] = filter.val
-    //sorry about this :) - don't know how to update the table
+    // still don't know how to update the table without triggering a built in mat table method
     this.paginator.lastPage();
     this.paginator.firstPage();
   }
