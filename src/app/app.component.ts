@@ -6,7 +6,11 @@ import { ComTableComponent } from './components/com-table/com-table.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, ListComponent, ComTableComponent],
+  imports: [
+    RouterOutlet, 
+    ListComponent,
+    ComTableComponent,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
