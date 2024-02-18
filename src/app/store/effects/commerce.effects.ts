@@ -14,7 +14,7 @@ export class CommerceEffects {
         ofType(CommerceActions.loadCommerces),
         exhaustMap(() => 
             this.commerceService
-                .getCommerces(35)
+                .getCommerces(100)
                 .pipe(map((commerces: Commerce[]) => CommerceActions.loadCommerces({ commerces })))
         )
     )
